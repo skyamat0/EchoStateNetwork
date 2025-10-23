@@ -29,9 +29,35 @@ $$
 時間発展は行列のみでなく活性化函数$\bm{F}$にも依存する？のであればKoopman解析はその非線形性も込みで解析できるから新たな指標ができると期待．
 さらに，ダイナミクスがわかっている状態でKoopman行列を推定し，そのダイナミクスに基づいたリザバーを持つネットワークがどの程度の性能を持つかということが調べられないか．
 （コンシステンシーを保ちつつカオス性が強いと性能が出るらしいので、その辺りと比較がひつよう）
+また，記憶容量と性能はトレードオフの関係にある．
+これは非線形ノードを使うほど性能が上がり，カオス性が強くなるので記憶容量が下がる．
+線形ノードを使うほど，記憶容量が上がり，カオス性が弱くなるので記憶容量が上がる．
+この辺りの話は混合率（線形ノードと非線形ノードの割合）を元に，[^3]で議論されている．
+つまりここまでをまとめると，
+1. ESNの性能評価指標としてESPというものがある
+2. ESNの記憶容量と精度はトレードオフ関係にあり，線形ノード（記憶容量↑、精度↓）と非線形ノード（記憶容量↓、精度↑）によっていじれる
+これらより，
+EDMDcの結果得られる制御行列は特異値１に近いものが多いと嬉しい，ノード状態の時間発展行列は固有値が０に近いものが多いと嬉しい（記憶容量↑に寄与？精度には寄与しない？）？
+さらにノード状態の時間発展行列のうちで，精度に寄与するモードや記憶容量に寄与するモードが抽出できないかな？
+＝＞制御行列の特異値が1に近いものが多いということは，入力をリザバーが長期に記憶しているということである．
+ノードの時間発展行列を見ることはある意味でノードのカオス解析的な話なのか？
+今，一旦時間発展の議論を入力の制御行列とノードの時間発展行列の話に分けることができた．
+制御行列の固有値＋ノードの時間発展行列の記憶容量モード（簡単な構造で、長期に残りやすいモード？）で記憶容量を議論できる？
+ノードの時間発展行列の精度に関するモード（複雑な構造で、短期に消えるモード？消えて良いの？）
+（疑問）どんなネットワーク構造に対して、どんな値を割り当てたらいいのか？
+* ネットワーク構造が与えられた時点で大まかな性能は決まる？決まらない？
+    * （決まる）どんなネットワーク構造がいいかKoopman解析できる？
+    * （決まらない）値に依る＝ノードの状態遷移に依る？＝Koopman解析できそう
+おそらくどっちにも依存しそうではある。。。
+いろんなネットワーク構造に共通するものある？
+例えばランダムな重みの，ネットワーク構造的に記憶容量が良いESNは記憶容量モード（仮名）を持つ
+ネットワーク構造的に性能が良いESNは性能モード（仮名）を持つ的な．
+
 
 ## 先行研究調査
 [^1]: H. Jaegar, H. Haas, "Harnessing Nonlinearity: Predicting Chaotic Systems and Saving Energy in Wireless Communication",vol. 304, no. 5667, pp. 78-80, April 2004 DOI: 10.1126/science.109127
     [ref](https://www.columbia.edu/cu/biology/courses/w4070/Reading_List_Yuste/haas_04.pdf)
-[^2]: H. Jaegar, "The ”echo state” approach to analysing and training recurrent neural networks",German National Research Center for Information Technology GMD Report, vol. 148, no. 34, December 2001
+[^2]: H. Jaegar, "The ”echo state” approach to analysing and training recurrent neural networks", German National Research Center for Information Technology GMD Report, vol. 148, no. 34, December 2001
     [ref](http://www.faculty.jacobs-university.de/hjaeger/pubs/EchoStatesTechRep.pdf)
+[^3]: 犬伏正信, 吉村和之, "リザバーコンピューティングに適した力学系の特性と構造", "電子情報通信学会誌", vol. 102, no.2, pp.114-120, 2019
+    [ref](https://www.rs.tus.ac.jp/~inubushi/inubushi_rc.pdf)
